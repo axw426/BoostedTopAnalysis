@@ -1,0 +1,335 @@
+#include "LeptonEfficiencyChecker.h"
+
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <utility>
+#include <cmath>
+
+#include <EVENT/LCCollection.h>
+#include <EVENT/MCParticle.h>
+#include <IMPL/LCCollectionVec.h>
+#include <EVENT/LCRelation.h>
+#include <EVENT/ReconstructedParticle.h>
+#include <marlin/Exceptions.h>
+#include <UTIL/PIDHandler.h>
+#include "UTIL/LCRelationNavigator.h"
+
+// ----- include for verbosity dependend logging ---------
+#include <marlin/VerbosityLevels.h>
+
+#include <TMath.h>
+#include <TVector3.h>
+#include <TLorentzVector.h>
+
+#ifdef MARLIN_USE_AIDA
+#include <marlin/AIDAProcessor.h>
+#include <AIDA/IHistogramFactory.h>
+#include <AIDA/ITree.h>
+#include <AIDA/IHistogram1D.h>
+#endif // MARLIN_USE_AIDA
+
+using namespace lcio ;
+using namespace marlin ;
+
+LeptonEfficiencyChecker aLeptonEfficiencyChecker ;
+
+LeptonEfficiencyChecker::LeptonEfficiencyChecker()
+  : Processor("LeptonEfficiencyChecker") {
+
+  // Processor description
+  _description = "Isolated Lepton Finder Processor-> aw jet isolation performs box vuts on min z and xt" ;
+
+  // register steering parameters: name, description, class-variable, default value
+  registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+			   "InputCollection" ,
+			   "Input collection of Leptons",
+			   _inputLepCollection,
+			   std::string("IsoLep"));
+
+    registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+			   "PFOCollection" ,
+			   "Input collection of PFOs",
+			   _PFOCollection,
+			   std::string("PandoraPFANewPFOs"));
+
+    registerInputCollection( LCIO::MCPARTICLE,
+			   "MCCollectionName" , 
+			   "Name of the MCParticle collection"  ,
+			   _MCColName ,
+			   std::string("MCParticlesSkimmed"));
+
+    registerInputCollection( LCIO::LCRELATION,
+			     "RecoMCTruthLinkCollectionName" , 
+			     "Name of the LCRelation collection containing the linker information"  ,
+			     _LinkerColName ,
+			     std::string("RecoMCTruthLink"));
+
+    registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
+			   "JetCollection" ,
+			   "Input collection of jets for isolation",
+			   _jetCollectionName,
+			   std::string("JetsForIsolation"));
+   
+}
+
+
+void LeptonEfficiencyChecker::init() { 
+  streamlog_out(DEBUG) << "   init called  " << std::endl ;
+  nEvt=0;
+  nReal=0;
+  nFake=0;
+  nDuplicate=0;
+  // usually a good idea to
+  printParameters() ;
+
+  totalLeptonsFound=0;
+
+  AIDA::IHistogramFactory* pHistogramFactory=marlin::AIDAProcessor::histogramFactory( this );
+  AIDA::ITree* pTree=marlin::AIDAProcessor::tree( this );
+	
+  if( pHistogramFactory!=0 )
+    {
+      if (!(pTree->cd( "/" + name() + "/"))) 
+	{
+	  pTree->mkdir( "/" + name() + "/" );
+	  pTree->cd( "/" + name() + "/");
+	}
+		
+      //create a tree to contain results
+      _tData = new TTree("RecoData", "Tree containing final reconstructed masses");
+    }
+}
+
+void LeptonEfficiencyChecker::processRunHeader( LCRunHeader* run) { 
+} 
+
+void LeptonEfficiencyChecker::processEvent( LCEvent * evt ) { 
+
+
+  try{
+    _LepCol = evt->getCollection( _inputLepCollection ) ;
+  }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _inputLepCollection << " collection not available, exiting IsolatedLeptonProcessor..." << std::endl;
+      _LepCol = NULL;
+      return;
+    }
+
+  try{
+    _PFOCol = evt->getCollection( _PFOCollection ) ;
+  }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _PFOCollection << " collection not available, exiting IsolatedLeptonProcessor..." << std::endl;
+      _PFOCol = NULL;
+      return;
+    }
+
+  try{
+    _MCCol = evt->getCollection( _MCColName ) ;
+  }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _MCColName << " collection not available, exiting IsolatedLeptonProcessor..." << std::endl;
+      _MCCol = NULL;
+      return;
+    }
+
+  try{
+    LinkerCol = evt->getCollection( _LinkerColName ) ;
+  }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _LinkerColName << " collection not available, exiting IsolatedLeptonProcessor..." << std::endl;
+      LinkerCol = NULL;
+      return;
+    }
+
+  nLeptons=_LepCol->getNumberOfElements();
+  int nCorrect=0;
+  
+  for (int i=0; i<nLeptons; i++)
+    {
+      rp= dynamic_cast<ReconstructedParticle*>( _LepCol->getElementAt(i) );
+
+      //check if lepton is real or fake
+      if(IsCorrectLepton(rp)==true)
+	{
+	  nCorrect++;
+	}
+    }
+  _vnLeptonFound.push_back(nCorrect);
+  totalLeptonsFound+=nCorrect;
+  
+  std::cout<<"Event= "<<nEvt<<", nLeptons found= "<<nCorrect<<std::endl;
+
+  nEvt++;
+
+  
+}
+
+void LeptonEfficiencyChecker::check( LCEvent * evt ) { 
+}
+
+void LeptonEfficiencyChecker::end() {
+
+  AddBranch(_tData, "nLeptonFound",_vnLeptonFound );
+
+  std::cout<<"Efficiency= "<<totalLeptonsFound/(float)nEvt<<std::endl;
+
+}
+
+
+
+
+void LeptonEfficiencyChecker::AddBranch( TTree* input_tree, std::string title, std::vector<float> data )
+{
+  if( (input_tree->GetEntries() != (int)data.size()) && (input_tree->GetEntries() != 0) )
+    {
+      std::cout << "ERROR: CANNOT ADD BRANCH " << title << " DATA SIZE DID NOT MATCH TREE." 
+      	<< "Data size: " << data.size() << ". Tree size: "<< _vCorrectLeptonYN.size() << std::endl;
+      return;
+    }
+
+  float thisValue=0.;
+  TString name=title.c_str();
+  name.Append("/F");
+  TBranch* output_branch_obj = input_tree->Branch( title.c_str(), &thisValue, name );
+
+  input_tree->SetEntries( (int)data.size() );
+
+  for( unsigned int i=0; i< data.size(); ++i )
+    {
+      thisValue = data[i];
+      output_branch_obj->Fill();
+    }
+}
+
+
+bool LeptonEfficiencyChecker::IsCorrectLepton(ReconstructedParticle *lepton)
+{
+  bool passedtest =false;
+  LCRelationNavigator* relationNavigatorPFOMC = new LCRelationNavigator( LinkerCol );
+  EVENT::LCObjectVec relobjMC = relationNavigatorPFOMC->getRelatedToObjects(lepton);
+  for(unsigned int i=0;i<relobjMC.size() ; i++) // relobjMC always has size one but just to be safe...
+    {
+      MCParticle *mcp=NULL;
+      mcp=dynamic_cast <MCParticle*>(relobjMC[i]);
+      if (mcp!=NULL) //sometimes no link exists-> tends not to happen for particles within the process definition 
+	{
+	  if((abs(mcp->getPDG())==11 || abs(mcp->getPDG())==13) && mcp->getGeneratorStatus()==1) //if is really a lepton
+	    {
+	      //here on it becomes complicated to define the true lepton- MC not very consistant. Here have used prefix g to denote generator level particles
+	      for (MCParticle* TestMCP = mcp; TestMCP->getParents().size()>0; TestMCP=TestMCP->getParents()[0]) 
+		{
+		  if(abs(TestMCP->getPDG())==5 || abs(TestMCP->getPDG())==22){break;} // Isolated lepton should never have come from a photon or b jet
+		  
+		  //Case 1:  Initial Electron + Positron -> gPositron+gElectron -> final electron
+		   if((abs(TestMCP->getParents()[0]->getPDG())==11
+		       || abs(TestMCP->getParents()[0]->getPDG())==13) // parent is a lepton
+		     && TestMCP->getParents()[0]->getGeneratorStatus()==102 // parent is generator level particle
+		     && TestMCP->getParents()[0]->getParents().size()==2 //generator particle produced directly from the e+e- collision
+		     && abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+		     && abs(TestMCP->getParents()[0]->getParents()[1]->getPDG())==11
+		     && TestMCP->getParents()[0]->getParents()[0]->getParents().size()==2
+		     && (abs(TestMCP->getPDG())==11
+			 || abs(TestMCP->getPDG())==13))
+		    {
+		      passedtest=true;
+		      break;
+		    }
+
+		   //Case 2: gW -> final electron
+		  else if(abs(TestMCP->getParents()[0]->getPDG())==24     //came from W decay
+		     && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+			 || TestMCP->getParents()[0]->getGeneratorStatus()==2) // W present at generator level
+		     && (abs(TestMCP->getPDG())==11
+			 || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+		    {
+		      passedtest=true;
+		      break;
+		    }
+
+		  //case 3: gElectron->g94->final electron
+		  else if(abs(TestMCP->getParents()[0]->getPDG())==94     //came from W like cluster
+		     && (abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+			 || abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==13)// W appeared from nowhere....
+		     && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+			 || TestMCP->getParents()[0]->getGeneratorStatus()==2) // ...but was produced by the generator
+		     && (abs(TestMCP->getPDG())==11
+			 || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+		    {
+		      passedtest=true;
+		      break;
+		    }
+		  
+		}
+	      
+	    }
+	}
+    }
+  delete relationNavigatorPFOMC;
+  return passedtest;
+}
+
+bool LeptonEfficiencyChecker::IsCorrectLepton(MCParticle *lepton)
+{
+  bool passedtest =false;
+
+  MCParticle *mcp=lepton;
+
+  if((abs(mcp->getPDG())==11 || abs(mcp->getPDG())==13) && mcp->getGeneratorStatus()==1) //if is really a lepton
+    {
+      //here on it becomes complicated to define the true lepton- MC not very consistant. Here have used prefix g to denote generator level particles
+      for (MCParticle* TestMCP = mcp; TestMCP->getParents().size()>0; TestMCP=TestMCP->getParents()[0]) 
+	{
+	  if(abs(TestMCP->getPDG())==5 || abs(TestMCP->getPDG())==22){break;} // Isolated lepton should never have come from a photon or b jet
+		  
+	  //Case 1:  Initial Electron + Positron -> gPositron+gElectron -> final electron
+	  if((abs(TestMCP->getParents()[0]->getPDG())==11
+	      || abs(TestMCP->getParents()[0]->getPDG())==13) // parent is a lepton
+	     && TestMCP->getParents()[0]->getGeneratorStatus()==102 // parent is generator level particle
+	     && TestMCP->getParents()[0]->getParents().size()==2 //generator particle produced directly from the e+e- collision
+	     && abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+	     && abs(TestMCP->getParents()[0]->getParents()[1]->getPDG())==11
+	     && TestMCP->getParents()[0]->getParents()[0]->getParents().size()==2
+	     && (abs(TestMCP->getPDG())==11
+		 || abs(TestMCP->getPDG())==13))
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //Case 2: gW -> final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==24     //came from W decay
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // W present at generator level
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //case 3: gElectron->g94->final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==94     //came from W like cluster
+		  && (abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+		      || abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==13)// W appeared from nowhere....
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // ...but was produced by the generator
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+		  
+	}
+	      
+    }
+    
+    
+  return passedtest;
+}

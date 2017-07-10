@@ -1,0 +1,401 @@
+#include "MCEventRejector.h"
+#include "HelperClass.h"
+#include <iostream>
+#include <math.h>
+#include <vector>
+
+#include <EVENT/LCCollection.h>
+#include <EVENT/LCRelation.h>
+#include <EVENT/MCParticle.h>
+#include <EVENT/ReconstructedParticle.h>
+
+// ----- include for verbosity dependend logging ---------
+#include "marlin/VerbosityLevels.h"
+
+#include <marlin/Exceptions.h>
+
+#ifdef MARLIN_USE_AIDA
+#include <marlin/AIDAProcessor.h>
+#include <AIDA/IHistogramFactory.h>
+#include <AIDA/ITree.h>
+//#include <AIDA/IHistogram1D.h>
+#endif // MARLIN_USE_AIDA
+
+
+using namespace lcio ;
+using namespace marlin ;
+
+
+MCEventRejector aMCEventRejector ;
+
+
+MCEventRejector::MCEventRejector() : Processor("MCEventRejector") 
+{
+
+  // modify processor description
+  _description = "MCEventRejector filter events to reject various top decays, 1=single hadronic top, 2= hadronic + leptonic top, 3=leptonic top, 0=unclassified";
+
+
+  // register steering parameters: name, description, class-variable, default value
+  registerInputCollection( LCIO::MCPARTICLE,
+			   "CollectionName" , 
+			   "Name of the MCParticle collection"  ,
+			   _colName ,
+			   std::string("MCParticlesSkimmed")
+			   );
+
+  registerProcessorParameter( "Choice",
+			      "Choice of process to allow through",
+			      _choice,
+			      int(2));
+
+    registerProcessorParameter( "CutonEnergy",
+			      "Choice of process to allow through",
+			      _CutOnEnergy,
+			      int(1));
+}
+
+void MCEventRejector::init()
+{ 
+
+  streamlog_out(DEBUG) << "   init called  " << std::endl ;
+
+  // usually a good idea to
+  printParameters() ;
+
+  _nRun = 0 ;
+  _nEvt = 0 ;
+  nskipped=0;
+  npassed=0;
+
+  AIDA::IHistogramFactory* pHistogramFactory=marlin::AIDAProcessor::histogramFactory( this );
+  AIDA::ITree* pTree=marlin::AIDAProcessor::tree( this );
+  
+  if(  pHistogramFactory!=0 )
+    {
+      if (!(pTree->cd( "/" + name() + "/"))) 
+	{
+	  pTree->mkdir( "/" + name() + "/" );
+	  pTree->cd( "/" + name() + "/");
+	}
+			
+
+	_ndecaytype = new TH1F("decaytype_MC", "Decay type label MC", 5, -0.5, 4.5);
+     	
+    }
+}
+
+void MCEventRejector::processRunHeader( LCRunHeader* run) { 
+
+  _nRun++ ;
+} 
+
+
+
+void MCEventRejector::processEvent( LCEvent * evt ) 
+{ 
+  decaytype=0;
+  nBJets=0;
+  nQJets=0;
+  _vBJets.clear();
+  _vQJets.clear();
+  
+  LCCollection* col = NULL;
+  
+  try
+    {
+      col = evt->getCollection( _colName );
+    }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _colName << " collection not available" << std::endl;
+      col = NULL;
+    }
+
+  MCParticle *IsolatedLepton, *Neutrino;
+  int nLeptons=0;
+  int nNeutrinos=0;
+  if( col != NULL )
+    {
+      int nMCP = col->getNumberOfElements()  ;
+      for(int i=0; i< nMCP ; i++)
+	{
+	  MCParticle* mcp = dynamic_cast<MCParticle*>( col->getElementAt( i ) ) ;
+
+	  //count number of b/q jets produced by intial ee interaction
+	  if(abs(mcp->getPDG())== 5 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      nBJets++;
+	      _vBJets.push_back(mcp);
+	    }
+
+	  if(abs(mcp->getPDG())<= 4 && abs(mcp->getPDG())>= 1 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      nQJets++;
+	      _vQJets.push_back(mcp);
+	    }
+
+	  if(IsCorrectLepton(mcp))
+	    {
+	      IsolatedLepton=mcp;
+	      nLeptons++;
+	    }
+  	  if(abs(mcp->getPDG())== 12 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      Neutrino=mcp;
+	      nNeutrinos++;
+	    }
+  	  if(abs(mcp->getPDG())== 14 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      Neutrino=mcp;
+	      nNeutrinos++;
+	    }
+
+	}
+    }
+
+  if(nLeptons!=1){std::cout<<"Found "<<nLeptons<<" leptons, oh dear...."<<std::endl;}
+  if(nNeutrinos!=1){std::cout<<"Found "<<nNeutrinos<<" neutrinos, oh dear...."<<std::endl;}
+  
+  //lazy coding to let events with any energy pass if desired...
+  MCParticle* LeptonicBJet=NULL;
+  float Test0, Test1, Test2;
+  
+  //search for ee->bbqqlv
+  
+  if(nQJets==2 && nBJets==2) // hadronic top, W decays to u/d/s/c
+    {
+      WBoson=HelperClass::CombineParticles(_vQJets[0],_vQJets[1]);
+
+      Test0=HelperClass::CombineParticles(WBoson,_vBJets[1])->getMass();
+      Test1=HelperClass::CombineParticles(WBoson,_vBJets[0])->getMass();
+      
+      //mass constraint
+      if(Test0>168 && Test0<178)
+	{
+	  decaytype=1;
+	  LeptonicBJet=_vBJets[0];
+	}
+      else if(Test1>168 && Test1<178)
+	{
+	  decaytype=1;
+	  LeptonicBJet=_vBJets[1];
+	}
+      
+    }
+
+  else if(nBJets==3 && nQJets==1) // hadronic top, W decays to b
+    {
+      Test0=CombineThreeParticle(_vQJets[0],_vBJets[1],_vBJets[2])->getMass();
+      Test1=CombineThreeParticle(_vQJets[0],_vBJets[0],_vBJets[2])->getMass();
+      Test2=CombineThreeParticle(_vQJets[0],_vBJets[0],_vBJets[1])->getMass();
+
+      if(Test0>168 && Test0<178)
+	{
+	  decaytype=1;
+	  LeptonicBJet=_vBJets[0];
+
+	}
+      else if(Test1>168 && Test1<178)
+	{
+	  decaytype=1;
+	  LeptonicBJet=_vBJets[1];
+	}
+      else if(Test2>168 && Test2<178)
+	{
+	  decaytype=1;
+	  LeptonicBJet=_vBJets[2];
+	}
+    }
+
+  if(decaytype==1 && nLeptons==1 && nNeutrinos==1) //if we found a hadronic top
+    {
+      float LeptonicTopMass=CombineThreeParticle(LeptonicBJet,Neutrino,IsolatedLepton)->getMass();
+      if(LeptonicTopMass>168 && LeptonicTopMass<178)
+	{
+	  decaytype=2; //hadronic top and leptonic top found
+	}
+    }
+
+  else if(nBJets>1 && nLeptons==1 && nNeutrinos==1)
+    {
+      float LeptonicTopMass;
+      for (int i=0; i<_vBJets.size(); i++)
+	{
+	  LeptonicTopMass=CombineThreeParticle(_vBJets[i],Neutrino,IsolatedLepton)->getMass();
+	  if(LeptonicTopMass>168 && LeptonicTopMass<178)
+	    {
+	      decaytype=3; //leptonic top, no hadronic top
+	    }
+	}
+    }
+  _ndecaytype->Fill(decaytype);
+
+
+  std::cout<<"decaytype= "<<decaytype<<std::endl;
+    
+    //skip unwanted events
+  std::cout<<"processed event "<<_nEvt<<std::endl ;
+  _nEvt ++ ;
+
+  if(decaytype==_choice)
+    {
+  	 
+      nskipped++;
+      throw SkipEventException( this );
+    }
+
+  else 
+    {
+      npassed++;
+    }
+
+
+    
+}
+
+void MCEventRejector::check( LCEvent * evt ) { 
+  // nothing to check here - could be used to fill checkplots in reconstruction processor
+}
+
+
+void MCEventRejector::end(){ 
+
+  // std::cout << "MCEventRejector::end()  " << name() 
+  //   	    << " processed " << _nEvt << " events in " << _nRun << " runs "
+  //  	    << std::endl ;
+  std::cout<< "Events passed: "<< npassed<< "\n"<<"Events rejected: "<<nskipped<<std::endl;
+
+}
+
+
+ReconstructedParticle* MCEventRejector::CombineThreeParticle(MCParticle* a, MCParticle* b, MCParticle* c)
+{
+
+  ReconstructedParticle* dummy;
+  dummy=HelperClass::CombineParticles(a,b);
+  dummy=HelperClass::CombineParticles(dummy,c);
+
+  return dummy;
+}
+
+bool MCEventRejector::IsCorrectLepton(MCParticle *mcp)
+{
+  bool passedtest =false;
+
+
+  if((abs(mcp->getPDG())==11 || abs(mcp->getPDG())==13) && mcp->getGeneratorStatus()==1) //if is really a lepton
+    {
+      //here on it becomes complicated to define the true lepton- MC not very consistant. Here have used prefix g to denote generator level particles (status 2 or 102)
+      for (MCParticle* TestMCP = mcp; TestMCP->getParents().size()>0; TestMCP=TestMCP->getParents()[0]) 
+	{
+	  if(abs(TestMCP->getPDG())==5 || abs(TestMCP->getPDG())==22){break;} // Isolated lepton should never have come from a photon or b jet
+
+	  //Case 1:  Initial Electron + Positron -> gPositron+gElectron -> final lepton
+	  if((abs(TestMCP->getParents()[0]->getPDG())==11
+	      || abs(TestMCP->getParents()[0]->getPDG())==13) // parent is a lepton
+	     && TestMCP->getParents()[0]->getGeneratorStatus()==102 // parent is generator level particle
+	     && TestMCP->getParents()[0]->getParents().size()==2 //generator particle produced directly from the e+e- collision
+	     && abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+	     && abs(TestMCP->getParents()[0]->getParents()[1]->getPDG())==11
+	     && TestMCP->getParents()[0]->getParents()[0]->getParents().size()==2
+	     && (abs(TestMCP->getPDG())==11
+		 || abs(TestMCP->getPDG())==13))
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //Case 2: gW -> final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==24     //came from W decay
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // W present at generator level
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //case 3: gElectron->g94->final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==94     //came from W like cluster
+		  && (abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+		      || abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==13)// W appeared from nowhere....
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // ...but was produced by the generator
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+		  		  
+	}
+	      
+    }
+
+    
+  return passedtest;
+}
+
+
+bool MCEventRejector::IsCorrectNeutrino(MCParticle *mcp)
+{
+  bool passedtest =false;
+
+
+  if((abs(mcp->getPDG())==12 || abs(mcp->getPDG())==14) && mcp->getGeneratorStatus()==1) //if is really a lepton
+    {
+      //here on it becomes complicated to define the true lepton- MC not very consistant. Here have used prefix g to denote generator level particles (status 2 or 102)
+      for (MCParticle* TestMCP = mcp; TestMCP->getParents().size()>0; TestMCP=TestMCP->getParents()[0]) 
+	{
+	  if(abs(TestMCP->getPDG())==5 || abs(TestMCP->getPDG())==22){break;} // Isolated lepton should never have come from a photon or b jet
+
+	  //Case 1:  Initial Electron + Positron -> gPositron+gElectron -> final lepton
+	  if((abs(TestMCP->getParents()[0]->getPDG())==12
+	      || abs(TestMCP->getParents()[0]->getPDG())==14) // parent is a lepton
+	     && TestMCP->getParents()[0]->getGeneratorStatus()==102 // parent is generator level particle
+	     && TestMCP->getParents()[0]->getParents().size()==2 //generator particle produced directly from the e+e- collision
+	     && abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+	     && abs(TestMCP->getParents()[0]->getParents()[1]->getPDG())==11
+	     && TestMCP->getParents()[0]->getParents()[0]->getParents().size()==2
+	     && (abs(TestMCP->getPDG())==12
+		 || abs(TestMCP->getPDG())==14))
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //Case 2: gW -> final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==24     //came from W decay
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // W present at generator level
+		  && (abs(TestMCP->getPDG())==12
+		      || abs(TestMCP->getPDG())==14)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //case 3: gElectron->g94->final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==94     //came from W like cluster
+		  && (abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==12
+		      || abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==14)// W appeared from nowhere....
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // ...but was produced by the generator
+		  && (abs(TestMCP->getPDG())==12
+		      || abs(TestMCP->getPDG())==14)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+		  		  
+	}
+	      
+    }
+
+    
+  return passedtest;
+}

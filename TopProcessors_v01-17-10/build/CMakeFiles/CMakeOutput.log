@@ -1,0 +1,549 @@
+The system is: Linux - 4.11.6-101.fc24.x86_64 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/3.4.3/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/3.4.3/CompilerIdCXX/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_9b4fa/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_9b4fa.dir/build.make CMakeFiles/cmTC_9b4fa.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9b4fa.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_9b4fa.dir/testCCompiler.c.o   -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_9b4fa
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9b4fa.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_9b4fa.dir/testCCompiler.c.o  -o cmTC_9b4fa -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_c1ee9/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_c1ee9.dir/build.make CMakeFiles/cmTC_c1ee9.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o   -c /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/share/cmake-3.4/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_c1ee9
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c1ee9.dir/link.txt --verbose=1
+/usr/bin/cc      -v CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o  -o cmTC_c1ee9 -rdynamic  
+Using built-in specs.
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) 
+COMPILER_PATH=/cvmfs/sft.cern.ch/lcg/external/gcc/4.8.1/x86_64-slc6-gcc48-opt/lib/gcc/x86_64-unknown-linux-gnu/4.8.1/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c1ee9' '-rdynamic' '-mtune=generic'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c1ee9 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_c1ee9/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_c1ee9.dir/build.make CMakeFiles/cmTC_c1ee9.dir/build]
+  ignore line: [gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o   -c /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/share/cmake-3.4/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_c1ee9]
+  ignore line: [/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c1ee9.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o  -o cmTC_c1ee9 -rdynamic  ]
+  ignore line: [Using built-in specs.]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) ]
+  ignore line: [COMPILER_PATH=/cvmfs/sft.cern.ch/lcg/external/gcc/4.8.1/x86_64-slc6-gcc48-opt/lib/gcc/x86_64-unknown-linux-gnu/4.8.1/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c1ee9' '-rdynamic' '-mtune=generic']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_c1ee9 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_c1ee9] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..]
+    arg [CMakeFiles/cmTC_c1ee9.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> [/usr/lib]
+  implicit libs: [c]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.4.7;/usr/lib64;/lib64;/usr/lib]
+  implicit fwks: []
+
+
+
+
+Detecting C [-std=c99] compiler features compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_337eb/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_337eb.dir/build.make CMakeFiles/cmTC_337eb.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_337eb.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_337eb.dir/feature_tests.c.o   -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_337eb
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_337eb.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_337eb.dir/feature_tests.c.o  -o cmTC_337eb -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:1c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:1c_variadic_macros
+
+
+Detecting C [-std=c89] compiler features compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_83569/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_83569.dir/build.make CMakeFiles/cmTC_83569.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_83569.dir/feature_tests.c.o
+/usr/bin/cc    -std=c89 -o CMakeFiles/cmTC_83569.dir/feature_tests.c.o   -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_83569
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_83569.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_83569.dir/feature_tests.c.o  -o cmTC_83569 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: C_FEATURE:1c_function_prototypes
+    Feature record: C_FEATURE:0c_restrict
+    Feature record: C_FEATURE:0c_static_assert
+    Feature record: C_FEATURE:0c_variadic_macros
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_7bf0b/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_7bf0b.dir/build.make CMakeFiles/cmTC_7bf0b.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7bf0b.dir/testCXXCompiler.cxx.o
+/usr/bin/c++      -o CMakeFiles/cmTC_7bf0b.dir/testCXXCompiler.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_7bf0b
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7bf0b.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_7bf0b.dir/testCXXCompiler.cxx.o  -o cmTC_7bf0b -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_1aa37/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_1aa37.dir/build.make CMakeFiles/cmTC_1aa37.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++      -o CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o -c /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/share/cmake-3.4/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_1aa37
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1aa37.dir/link.txt --verbose=1
+/usr/bin/c++       -v CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1aa37 -rdynamic  
+Using built-in specs.
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) 
+COMPILER_PATH=/cvmfs/sft.cern.ch/lcg/external/gcc/4.8.1/x86_64-slc6-gcc48-opt/lib/gcc/x86_64-unknown-linux-gnu/4.8.1/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1aa37' '-rdynamic' '-shared-libgcc' '-mtune=generic'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_1aa37 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/gmake" "cmTC_1aa37/fast"]
+  ignore line: [/usr/bin/gmake -f CMakeFiles/cmTC_1aa37.dir/build.make CMakeFiles/cmTC_1aa37.dir/build]
+  ignore line: [gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o -c /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/share/cmake-3.4/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_1aa37]
+  ignore line: [/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1aa37.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1aa37 -rdynamic  ]
+  ignore line: [Using built-in specs.]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-languages=c,c++,objc,obj-c++,java,fortran,ada --enable-java-awt=gtk --disable-dssi --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-1.5.0.0/jre --enable-libgcj-multifile --enable-java-maintainer-mode --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --disable-libjava-multilib --with-ppl --with-cloog --with-tune=generic --with-arch_32=i686 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) ]
+  ignore line: [COMPILER_PATH=/cvmfs/sft.cern.ch/lcg/external/gcc/4.8.1/x86_64-slc6-gcc48-opt/lib/gcc/x86_64-unknown-linux-gnu/4.8.1/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1aa37' '-rdynamic' '-shared-libgcc' '-mtune=generic']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2 --eh-frame-hdr --build-id -m elf_x86_64 --hash-style=gnu -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_1aa37 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../.. CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/4.4.7/collect2] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-export-dynamic] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_1aa37] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..]
+    arg [CMakeFiles/cmTC_1aa37.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-lstdc++] ==> lib [stdc++]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64/crtn.o] ==> ignore
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.4.7]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../..] ==> [/usr/lib]
+  implicit libs: [stdc++;m;c]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.4.7;/usr/lib64;/lib64;/usr/lib]
+  implicit fwks: []
+
+
+
+
+Detecting CXX [-std=c++0x] compiler features compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_0ba95/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_0ba95.dir/build.make CMakeFiles/cmTC_0ba95.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0ba95.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++0x -o CMakeFiles/cmTC_0ba95.dir/feature_tests.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_0ba95
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0ba95.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_0ba95.dir/feature_tests.cxx.o  -o cmTC_0ba95 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:0cxx_alias_templates
+    Feature record: CXX_FEATURE:0cxx_alignas
+    Feature record: CXX_FEATURE:0cxx_alignof
+    Feature record: CXX_FEATURE:0cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:1cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:0cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:1cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:0cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:1cxx_default_function_template_args
+    Feature record: CXX_FEATURE:1cxx_defaulted_functions
+    Feature record: CXX_FEATURE:0cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:0cxx_delegating_constructors
+    Feature record: CXX_FEATURE:1cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:0cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:0cxx_explicit_conversions
+    Feature record: CXX_FEATURE:0cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:1cxx_extern_templates
+    Feature record: CXX_FEATURE:0cxx_final
+    Feature record: CXX_FEATURE:1cxx_func_identifier
+    Feature record: CXX_FEATURE:1cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:0cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:1cxx_inline_namespaces
+    Feature record: CXX_FEATURE:0cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:0cxx_local_type_template_args
+    Feature record: CXX_FEATURE:1cxx_long_long_type
+    Feature record: CXX_FEATURE:0cxx_noexcept
+    Feature record: CXX_FEATURE:0cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:0cxx_nullptr
+    Feature record: CXX_FEATURE:0cxx_override
+    Feature record: CXX_FEATURE:0cxx_range_for
+    Feature record: CXX_FEATURE:0cxx_raw_string_literals
+    Feature record: CXX_FEATURE:0cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:1cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:1cxx_rvalue_references
+    Feature record: CXX_FEATURE:1cxx_sizeof_member
+    Feature record: CXX_FEATURE:1cxx_static_assert
+    Feature record: CXX_FEATURE:1cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:0cxx_thread_local
+    Feature record: CXX_FEATURE:1cxx_trailing_return_types
+    Feature record: CXX_FEATURE:1cxx_unicode_literals
+    Feature record: CXX_FEATURE:1cxx_uniform_initialization
+    Feature record: CXX_FEATURE:0cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:0cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:1cxx_variadic_macros
+    Feature record: CXX_FEATURE:1cxx_variadic_templates
+
+
+Detecting CXX [-std=c++98] compiler features compiled with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_c4f7e/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_c4f7e.dir/build.make CMakeFiles/cmTC_c4f7e.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c4f7e.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_c4f7e.dir/feature_tests.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_c4f7e
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c4f7e.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_c4f7e.dir/feature_tests.cxx.o  -o cmTC_c4f7e -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+
+    Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
+    Feature record: CXX_FEATURE:0cxx_alias_templates
+    Feature record: CXX_FEATURE:0cxx_alignas
+    Feature record: CXX_FEATURE:0cxx_alignof
+    Feature record: CXX_FEATURE:0cxx_attributes
+    Feature record: CXX_FEATURE:0cxx_attribute_deprecated
+    Feature record: CXX_FEATURE:0cxx_auto_type
+    Feature record: CXX_FEATURE:0cxx_binary_literals
+    Feature record: CXX_FEATURE:0cxx_constexpr
+    Feature record: CXX_FEATURE:0cxx_contextual_conversions
+    Feature record: CXX_FEATURE:0cxx_decltype
+    Feature record: CXX_FEATURE:0cxx_decltype_auto
+    Feature record: CXX_FEATURE:0cxx_decltype_incomplete_return_types
+    Feature record: CXX_FEATURE:0cxx_default_function_template_args
+    Feature record: CXX_FEATURE:0cxx_defaulted_functions
+    Feature record: CXX_FEATURE:0cxx_defaulted_move_initializers
+    Feature record: CXX_FEATURE:0cxx_delegating_constructors
+    Feature record: CXX_FEATURE:0cxx_deleted_functions
+    Feature record: CXX_FEATURE:0cxx_digit_separators
+    Feature record: CXX_FEATURE:0cxx_enum_forward_declarations
+    Feature record: CXX_FEATURE:0cxx_explicit_conversions
+    Feature record: CXX_FEATURE:0cxx_extended_friend_declarations
+    Feature record: CXX_FEATURE:0cxx_extern_templates
+    Feature record: CXX_FEATURE:0cxx_final
+    Feature record: CXX_FEATURE:0cxx_func_identifier
+    Feature record: CXX_FEATURE:0cxx_generalized_initializers
+    Feature record: CXX_FEATURE:0cxx_generic_lambdas
+    Feature record: CXX_FEATURE:0cxx_inheriting_constructors
+    Feature record: CXX_FEATURE:0cxx_inline_namespaces
+    Feature record: CXX_FEATURE:0cxx_lambdas
+    Feature record: CXX_FEATURE:0cxx_lambda_init_captures
+    Feature record: CXX_FEATURE:0cxx_local_type_template_args
+    Feature record: CXX_FEATURE:0cxx_long_long_type
+    Feature record: CXX_FEATURE:0cxx_noexcept
+    Feature record: CXX_FEATURE:0cxx_nonstatic_member_init
+    Feature record: CXX_FEATURE:0cxx_nullptr
+    Feature record: CXX_FEATURE:0cxx_override
+    Feature record: CXX_FEATURE:0cxx_range_for
+    Feature record: CXX_FEATURE:0cxx_raw_string_literals
+    Feature record: CXX_FEATURE:0cxx_reference_qualified_functions
+    Feature record: CXX_FEATURE:0cxx_relaxed_constexpr
+    Feature record: CXX_FEATURE:0cxx_return_type_deduction
+    Feature record: CXX_FEATURE:0cxx_right_angle_brackets
+    Feature record: CXX_FEATURE:0cxx_rvalue_references
+    Feature record: CXX_FEATURE:0cxx_sizeof_member
+    Feature record: CXX_FEATURE:0cxx_static_assert
+    Feature record: CXX_FEATURE:0cxx_strong_enums
+    Feature record: CXX_FEATURE:1cxx_template_template_parameters
+    Feature record: CXX_FEATURE:0cxx_thread_local
+    Feature record: CXX_FEATURE:0cxx_trailing_return_types
+    Feature record: CXX_FEATURE:0cxx_unicode_literals
+    Feature record: CXX_FEATURE:0cxx_uniform_initialization
+    Feature record: CXX_FEATURE:0cxx_unrestricted_unions
+    Feature record: CXX_FEATURE:0cxx_user_literals
+    Feature record: CXX_FEATURE:0cxx_variable_templates
+    Feature record: CXX_FEATURE:0cxx_variadic_macros
+    Feature record: CXX_FEATURE:0cxx_variadic_templates
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wall succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_d0e96/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_d0e96.dir/build.make CMakeFiles/cmTC_d0e96.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d0e96.dir/src.cxx.o
+/usr/bin/c++     -DCXX_FLAG_WORKS_-Wall   -Wall -o CMakeFiles/cmTC_d0e96.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_d0e96
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0e96.dir/link.txt --verbose=1
+/usr/bin/c++    -DCXX_FLAG_WORKS_-Wall    CMakeFiles/cmTC_d0e96.dir/src.cxx.o  -o cmTC_d0e96 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wextra succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_39c7f/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_39c7f.dir/build.make CMakeFiles/cmTC_39c7f.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_39c7f.dir/src.cxx.o
+/usr/bin/c++     -Wall   -DCXX_FLAG_WORKS_-Wextra   -Wextra -o CMakeFiles/cmTC_39c7f.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_39c7f
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39c7f.dir/link.txt --verbose=1
+/usr/bin/c++   -Wall   -DCXX_FLAG_WORKS_-Wextra    CMakeFiles/cmTC_39c7f.dir/src.cxx.o  -o cmTC_39c7f -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wshadow succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_03612/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_03612.dir/build.make CMakeFiles/cmTC_03612.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_03612.dir/src.cxx.o
+/usr/bin/c++     -Wextra -Wall    -DCXX_FLAG_WORKS_-Wshadow   -Wshadow -o CMakeFiles/cmTC_03612.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_03612
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_03612.dir/link.txt --verbose=1
+/usr/bin/c++   -Wextra -Wall    -DCXX_FLAG_WORKS_-Wshadow    CMakeFiles/cmTC_03612.dir/src.cxx.o  -o cmTC_03612 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Weffc++ succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_2f838/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_2f838.dir/build.make CMakeFiles/cmTC_2f838.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2f838.dir/src.cxx.o
+/usr/bin/c++     -Wshadow -Wextra -Wall     -DCXX_FLAG_WORKS_-Weffc++   -Weffc++ -o CMakeFiles/cmTC_2f838.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_2f838
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2f838.dir/link.txt --verbose=1
+/usr/bin/c++   -Wshadow -Wextra -Wall     -DCXX_FLAG_WORKS_-Weffc++    CMakeFiles/cmTC_2f838.dir/src.cxx.o  -o cmTC_2f838 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-pedantic succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_6ec56/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_6ec56.dir/build.make CMakeFiles/cmTC_6ec56.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_6ec56.dir/src.cxx.o
+/usr/bin/c++     -Weffc++ -Wshadow -Wextra -Wall      -DCXX_FLAG_WORKS_-pedantic   -pedantic -o CMakeFiles/cmTC_6ec56.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_6ec56
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6ec56.dir/link.txt --verbose=1
+/usr/bin/c++   -Weffc++ -Wshadow -Wextra -Wall      -DCXX_FLAG_WORKS_-pedantic    CMakeFiles/cmTC_6ec56.dir/src.cxx.o  -o cmTC_6ec56 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wno-long-long succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_bac35/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_bac35.dir/build.make CMakeFiles/cmTC_bac35.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_bac35.dir/src.cxx.o
+/usr/bin/c++     -pedantic -Weffc++ -Wshadow -Wextra -Wall       -DCXX_FLAG_WORKS_-Wno-long-long   -Wno-long-long -o CMakeFiles/cmTC_bac35.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_bac35
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bac35.dir/link.txt --verbose=1
+/usr/bin/c++   -pedantic -Weffc++ -Wshadow -Wextra -Wall       -DCXX_FLAG_WORKS_-Wno-long-long    CMakeFiles/cmTC_bac35.dir/src.cxx.o  -o cmTC_bac35 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wuninitialized succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_47179/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_47179.dir/build.make CMakeFiles/cmTC_47179.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_47179.dir/src.cxx.o
+/usr/bin/c++     -Wno-long-long -pedantic -Weffc++ -Wshadow -Wextra -Wall        -DCXX_FLAG_WORKS_-Wuninitialized   -Wuninitialized -o CMakeFiles/cmTC_47179.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_47179
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47179.dir/link.txt --verbose=1
+/usr/bin/c++   -Wno-long-long -pedantic -Weffc++ -Wshadow -Wextra -Wall        -DCXX_FLAG_WORKS_-Wuninitialized    CMakeFiles/cmTC_47179.dir/src.cxx.o  -o cmTC_47179 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_FLAG_WORKS_-Wl,-no-undefined succeded with the following output:
+Change Dir: /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/gmake" "cmTC_ecb43/fast"
+/usr/bin/gmake -f CMakeFiles/cmTC_ecb43.dir/build.make CMakeFiles/cmTC_ecb43.dir/build
+gmake[1]: Entering directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ecb43.dir/src.cxx.o
+/usr/bin/c++     -Wuninitialized -Wno-long-long -pedantic -Weffc++ -Wshadow -Wextra -Wall         -DCXX_FLAG_WORKS_-Wl,-no-undefined   -Wl,-no-undefined -o CMakeFiles/cmTC_ecb43.dir/src.cxx.o -c /home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: missing whitespace after the macro name
+Linking CXX executable cmTC_ecb43
+/cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/CMake/3.4.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ecb43.dir/link.txt --verbose=1
+/usr/bin/c++   -Wuninitialized -Wno-long-long -pedantic -Weffc++ -Wshadow -Wextra -Wall         -DCXX_FLAG_WORKS_-Wl,-no-undefined    CMakeFiles/cmTC_ecb43.dir/src.cxx.o  -o cmTC_ecb43 -rdynamic 
+gmake[1]: Leaving directory `/disk/homedisk/home/aw/aw_Marlin/TopProcessors_v01-17-10/build/CMakeFiles/CMakeTmp'
+
+Source file was:
+int main() { return 0; }

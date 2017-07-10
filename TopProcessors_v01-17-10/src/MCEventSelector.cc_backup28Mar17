@@ -1,0 +1,390 @@
+#include "MCEventSelector.h"
+#include <iostream>
+#include <math.h>
+#include <vector>
+
+#include <EVENT/LCCollection.h>
+#include <EVENT/LCRelation.h>
+#include <EVENT/MCParticle.h>
+#include <EVENT/ReconstructedParticle.h>
+
+// ----- include for verbosity dependend logging ---------
+#include "marlin/VerbosityLevels.h"
+
+#include <marlin/Exceptions.h>
+
+#ifdef MARLIN_USE_AIDA
+#include <marlin/AIDAProcessor.h>
+#include <AIDA/IHistogramFactory.h>
+#include <AIDA/ITree.h>
+//#include <AIDA/IHistogram1D.h>
+#endif // MARLIN_USE_AIDA
+
+
+using namespace lcio ;
+using namespace marlin ;
+
+
+MCEventSelector aMCEventSelector ;
+
+
+MCEventSelector::MCEventSelector() : Processor("MCEventSelector") 
+{
+
+  // modify processor description
+  _description = "MCEventSelector filter events to find various top decays, 1=single hadronic top, 2= hadronic + leptonic top, 3=single leptonic top, 0=unclassified";
+
+
+  // register steering parameters: name, description, class-variable, default value
+  registerInputCollection( LCIO::MCPARTICLE,
+			   "CollectionName" , 
+			   "Name of the MCParticle collection"  ,
+			   _colName ,
+			   std::string("MCParticlesSkimmed")
+			   );
+
+  registerProcessorParameter( "Choice",
+			      "Choice of process to allow through",
+			      _choice,
+			      int(2));
+}
+
+void MCEventSelector::init()
+{ 
+
+  streamlog_out(DEBUG) << "   init called  " << std::endl ;
+
+  // usually a good idea to
+  printParameters() ;
+
+  _nRun = 0 ;
+  _nEvt = 0 ;
+  nskipped=0;
+  npassed=0;
+
+  LowerTopLimit=166.16;
+  UpperTopLimit=180.26;
+
+  AIDA::IHistogramFactory* pHistogramFactory=marlin::AIDAProcessor::histogramFactory( this );
+  AIDA::ITree* pTree=marlin::AIDAProcessor::tree( this );
+  
+  if(  pHistogramFactory!=0 )
+    {
+      if (!(pTree->cd( "/" + name() + "/"))) 
+	{
+	  pTree->mkdir( "/" + name() + "/" );
+	  pTree->cd( "/" + name() + "/");
+	}
+			
+
+	_ndecaytype = new TH1F("decaytype_MC", "Decay type label MC", 5, -0.5, 4.5);
+     	
+    }
+}
+
+void MCEventSelector::processRunHeader( LCRunHeader* run) { 
+
+  _nRun++ ;
+} 
+
+
+
+void MCEventSelector::processEvent( LCEvent * evt ) 
+{ 
+  decaytype=0;
+  nJets=0;
+  _vJets.clear();
+  MCParticle *IsolatedLepton, *Neutrino;
+  int nLeptons=0;
+  int nNeutrinos=0;
+  bool hadronictopjet=false;
+  bool leptonictopjet=false;
+  LCCollection* col = NULL;
+  
+  try
+    {
+      col = evt->getCollection( _colName );
+    }
+  catch( lcio::DataNotAvailableException e )
+    {
+      streamlog_out(WARNING) << _colName << " collection not available" << std::endl;
+      col = NULL;
+    }
+
+
+
+  if( col != NULL )
+    {
+      int nMCP = col->getNumberOfElements()  ;
+      for(int i=0; i< nMCP ; i++)
+	{
+	  MCParticle* mcp = dynamic_cast<MCParticle*>( col->getElementAt( i ) ) ;
+
+	  //count number of b/q jets produced by intial ee interaction
+	  if(abs(mcp->getPDG())<= 5 && abs(mcp->getPDG())>= 1 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      nJets++;
+	      _vJets.push_back(mcp);
+	    }
+
+  	  else if(abs(mcp->getPDG())== 12 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      Neutrino=mcp;
+	      nNeutrinos++;
+	    }
+  	  else if(abs(mcp->getPDG())== 14 && abs(mcp->getParents()[0]->getPDG())==11)
+	    {
+	      Neutrino=mcp;
+	      nNeutrinos++;
+	    }
+
+	  else if((abs(mcp->getPDG())==11 || abs(mcp->getPDG())==13) && IsCorrectLepton(mcp))
+	    {
+	      IsolatedLepton=mcp;
+	      nLeptons++;
+	    }
+
+	}
+    }
+
+  if(nLeptons!=1 || nNeutrinos!=1 || nJets!=4){std::cout<<"Incorrect number of initial fermions"<<std::endl;}
+  
+  float test0, test1, test2, test3;
+  
+  //search for ee->bbqqlv
+  WBoson=CombineParticles(Neutrino,IsolatedLepton);
+      
+  //mass constraint
+  for(int i=0;i<4;i++)
+    {
+      topmass=CombineParticles(WBoson,_vJets[i])->getMass();
+      if(topmass>LowerTopLimit && topmass<UpperTopLimit)
+	{
+	  leptonictopjet=true;
+	  _vJets.erase(_vJets.begin()+i);
+	  break;
+	}
+    }
+
+  if(leptonictopjet==true)
+    {
+      topmass=CombineThreeParticles(_vJets[0],_vJets[1],_vJets[2])->getMass();
+     if(topmass>LowerTopLimit && topmass<UpperTopLimit)
+	{
+	  hadronictopjet=true;
+	}
+    }
+
+  else
+    {
+      test0=CombineThreeParticles(_vJets[1],_vJets[2],_vJets[3])->getMass();
+      test1=CombineThreeParticles(_vJets[0],_vJets[2],_vJets[3])->getMass();
+      test2=CombineThreeParticles(_vJets[0],_vJets[1],_vJets[3])->getMass();
+      test3=CombineThreeParticles(_vJets[0],_vJets[1],_vJets[2])->getMass();
+
+      if(test0>LowerTopLimit && test0<UpperTopLimit){hadronictopjet=true;}
+      else if(test1>LowerTopLimit && test1<UpperTopLimit){hadronictopjet=true;}
+      else if(test2>LowerTopLimit && test2<UpperTopLimit){hadronictopjet=true;}
+      else if(test3>LowerTopLimit && test3<UpperTopLimit){hadronictopjet=true;}
+    }
+
+  if(leptonictopjet==true && hadronictopjet==true){decaytype=2;}
+  else if(leptonictopjet==true){decaytype=3;}
+  else if(hadronictopjet==true){decaytype=1;}
+  else {decaytype=0;}
+  
+  _ndecaytype->Fill(decaytype);
+
+
+  std::cout<<"decaytype= "<<decaytype<<std::endl;
+    
+    //skip unwanted events
+  if(_nEvt%1000==0){  std::cout<<"processed event "<<_nEvt<<std::endl ;}
+  _nEvt ++ ;
+
+  if(decaytype!=_choice)
+    {
+  	 
+      nskipped++;
+      throw SkipEventException( this );
+    }
+
+  else 
+    {
+      npassed++;
+    }
+
+
+    
+}
+
+void MCEventSelector::check( LCEvent * evt ) { 
+  // nothing to check here - could be used to fill checkplots in reconstruction processor
+}
+
+
+void MCEventSelector::end(){ 
+
+  // std::cout << "MCEventSelector::end()  " << name() 
+  //   	    << " processed " << _nEvt << " events in " << _nRun << " runs "
+  //  	    << std::endl ;
+  std::cout<< "Events passed: "<< npassed<< "\n"<<"Events rejected: "<<nskipped<<std::endl;
+
+}
+
+
+ReconstructedParticle* MCEventSelector::CombineThreeParticles(MCParticle* a, MCParticle* b, MCParticle* c)
+{
+
+  ReconstructedParticle* dummy;
+  dummy=CombineParticles(a,b);
+  dummy=CombineParticles(dummy,c);
+
+  return dummy;
+}
+
+bool MCEventSelector::IsCorrectLepton(MCParticle *mcp)
+{
+  bool passedtest =false;
+
+
+  if((abs(mcp->getPDG())==11 || abs(mcp->getPDG())==13) && mcp->getGeneratorStatus()==1) //if is really a lepton
+    {
+      //here on it becomes complicated to define the true lepton- MC not very consistant. Here have used prefix g to denote generator level particles (status 2 or 102)
+      for (MCParticle* TestMCP = mcp; TestMCP->getParents().size()>0; TestMCP=TestMCP->getParents()[0]) 
+	{
+	  if(abs(TestMCP->getPDG())==5 || abs(TestMCP->getPDG())==22){break;} // Isolated lepton should never have come from a photon or b jet
+
+	  //Case 1:  Initial Electron + Positron -> gPositron+gElectron -> final lepton
+	  if((abs(TestMCP->getParents()[0]->getPDG())==11
+	      || abs(TestMCP->getParents()[0]->getPDG())==13) // parent is a lepton
+	     && TestMCP->getParents()[0]->getGeneratorStatus()==102 // parent is generator level particle
+	     && TestMCP->getParents()[0]->getParents().size()==2 //generator particle produced directly from the e+e- collision
+	     && abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+	     && abs(TestMCP->getParents()[0]->getParents()[1]->getPDG())==11
+	     && TestMCP->getParents()[0]->getParents()[0]->getParents().size()==2
+	     && (abs(TestMCP->getPDG())==11
+		 || abs(TestMCP->getPDG())==13))
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //Case 2: gW -> final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==24     //came from W decay
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // W present at generator level
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+	  //case 3: gElectron->g94->final electron
+	  else if(abs(TestMCP->getParents()[0]->getPDG())==94     //came from W like cluster
+		  && (abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==11
+		      || abs(TestMCP->getParents()[0]->getParents()[0]->getPDG())==13)// W appeared from nowhere....
+		  && (TestMCP->getParents()[0]->getGeneratorStatus()==102
+		      || TestMCP->getParents()[0]->getGeneratorStatus()==2) // ...but was produced by the generator
+		  && (abs(TestMCP->getPDG())==11
+		      || abs(TestMCP->getPDG())==13)) // W decayed leptonically
+	    {
+	      passedtest=true;
+	      break;
+	    }
+
+		  		  
+	}
+	      
+    }
+
+    
+  return passedtest;
+}
+
+
+double MCEventSelector::ReconstructedMass( MCParticle* p1, MCParticle* p2 )
+{
+  const double *mom1 = p1->getMomentum();
+  const double *mom2 = p2->getMomentum();
+	
+  double mass_squared = pow( p1->getEnergy()+p2->getEnergy(), 2 ) 
+    - pow( mom1[0]+mom2[0],2 ) 
+    - pow( mom1[1]+mom2[1],2 )
+    - pow( mom1[2]+mom2[2],2 );
+											
+  return pow( mass_squared, 0.5 );
+}
+
+ReconstructedParticle* MCEventSelector::CombineParticles( MCParticle *p1, MCParticle *p2 )
+{
+  // create a ReconstructedParticle that saves the jet
+  ReconstructedParticleImpl* newParticle = new ReconstructedParticleImpl();
+	
+  double Energy = p1->getEnergy() + p2->getEnergy();
+
+  const double *mom1 = p1->getMomentum();
+  const double *mom2 = p2->getMomentum();
+	
+  //sum the momentums together
+  double *Momentum = new double[3];
+  Momentum[0] = mom1[0]+mom2[0];
+  Momentum[1] = mom1[1]+mom2[1];
+  Momentum[2] = mom1[2]+mom2[2];
+	
+  double mass = ReconstructedMass( p1, p2 );
+	
+  //set the parameters
+  newParticle->setMass( mass );
+  newParticle->setEnergy( Energy );
+  newParticle->setMomentum( Momentum );
+	
+
+  //now return the jet
+  delete Momentum;
+  return newParticle ;
+}
+
+
+double MCEventSelector::ReconstructedMass( ReconstructedParticle* p1, MCParticle* p2 )
+{
+  const double *mom1 = p1->getMomentum();
+  const double *mom2 = p2->getMomentum();
+	
+  double mass_squared = pow( p1->getEnergy()+p2->getEnergy(), 2 ) 
+    - pow( mom1[0]+mom2[0],2 ) 
+    - pow( mom1[1]+mom2[1],2 )
+    - pow( mom1[2]+mom2[2],2 );
+											
+  return pow( mass_squared, 0.5 );
+}
+
+ReconstructedParticle* MCEventSelector::CombineParticles( ReconstructedParticle *p1, MCParticle *p2 )
+{
+  // create a ReconstructedParticle that saves the jet
+  ReconstructedParticleImpl* newParticle = new ReconstructedParticleImpl();
+	
+  double Energy = p1->getEnergy() + p2->getEnergy();
+
+  const double *mom1 = p1->getMomentum();
+  const double *mom2 = p2->getMomentum();
+	
+  //sum the momentums together
+  double *Momentum = new double[3];
+  Momentum[0] = mom1[0]+mom2[0];
+  Momentum[1] = mom1[1]+mom2[1];
+  Momentum[2] = mom1[2]+mom2[2];
+	
+  double mass = ReconstructedMass( p1, p2 );
+	
+  //set the parameters
+  newParticle->setMass( mass );
+  newParticle->setEnergy( Energy );
+  newParticle->setMomentum( Momentum );
+	
+
+  //now return the jet
+  delete Momentum;
+  return newParticle ;
+}

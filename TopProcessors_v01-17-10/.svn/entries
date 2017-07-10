@@ -1,0 +1,82 @@
+8
+
+dir
+629
+svn+ssh://svn.cern.ch/reps/clicdet/tags/TauFinderRelease_v0.1/TauFinder
+svn+ssh://svn.cern.ch/reps/clicdet
+
+
+
+2010-05-07T10:35:32.110258Z
+562
+amunnich
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+53ecefc3-a64d-0410-9bdf-b8581fa3287e
+
+BuildSetup.cmake
+file
+
+
+
+
+2010-05-27T16:23:27.000000Z
+edfc5dc54d34de5b13253617218fd555
+2010-04-19T11:39:16.661024Z
+469
+sailer
+
+include
+dir
+
+src
+dir
+
+TauFinderConfig.cmake.in
+file
+
+
+
+
+2010-05-27T16:23:27.000000Z
+bf67bb4d8eaeb6179db4ca6624a80f2b
+2010-04-19T11:39:16.661024Z
+469
+sailer
+
+CMakeLists.txt
+file
+
+
+
+
+2010-05-27T16:23:27.000000Z
+eaf12771c974a6579651dc53784cde0a
+2010-04-19T11:39:16.661024Z
+469
+sailer
+
+cmake_uninstall.cmake.in
+file
+
+
+
+
+2010-05-27T16:23:27.000000Z
+64ed557e9859af78afe47acd5b258bc7
+2010-04-19T11:39:16.661024Z
+469
+sailer
+
